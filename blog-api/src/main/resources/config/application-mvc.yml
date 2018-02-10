@@ -1,0 +1,7 @@
+spring:
+  mvc:
+    view:
+      suffix: .ftl
+      prefix: /WEB-INF/
+  freemarker:
+    template-loader-path: /WEB-INF/pages/

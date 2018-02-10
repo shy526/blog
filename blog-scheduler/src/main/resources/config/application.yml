@@ -1,0 +1,8 @@
+logging:
+  path: logs/
+  level:
+    us.codecraft.webmagic.downloader.HttpClientDownloader: off
+spring:
+  profiles:
+    active: datasource,mybatis
+
