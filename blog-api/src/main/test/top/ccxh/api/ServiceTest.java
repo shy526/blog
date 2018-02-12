@@ -1,18 +1,17 @@
 package top.ccxh.api;
 
 
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.format.datetime.DateFormatter;
 import org.springframework.test.context.junit4.SpringRunner;
-import top.ccxh.common.utils.DateUtil;
-import top.ccxh.xmapper.dto.Blog;
 import top.ccxh.xmapper.mapper.BlogMapper;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 @SuppressWarnings("SpringJavaAutowiringInspection")
 @RunWith(SpringRunner.class)
@@ -22,10 +21,7 @@ public class ServiceTest {
     private BlogMapper blogMapper;
     @Test
     public void test(){
-        List<Blog> blogs = blogMapper.selectAll();
-        LocalDateTime localDateTime = LocalDateTime.now().minusHours(1000);
-        int i = blogMapper.deleteByCrateTime(DateUtil.localDateTimeToUdate(localDateTime));
-        System.out.println("i = " + i);
-        System.out.println("blogs = " + blogs);
+        LocalDateTime parse = LocalDateTime.parse("2018-02-11T16:44:30Z", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssz"));
+        System.out.println("parse = " + parse.toString());
     }
 }

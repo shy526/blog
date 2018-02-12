@@ -25,8 +25,9 @@ public class GithubBlogServiceImpl implements GithubBlogService {
         LocalTime of1 = LocalTime.of(localDateTime.minusHours(1).getHour(), 55);
         //这个小时的55
         LocalTime of = LocalTime.of(localDateTime.getHour(), 55);
-        Date min= DateUtil.localTimeToUdate(of1, LocalDate.now());
-        Date max= DateUtil.localTimeToUdate(of, LocalDate.now());
+        //取上个小时日期否则有跨天问题
+        Date min= DateUtil.localTimeToUdate(of1,localDateTime.minusHours(1).toLocalDate());
+        Date max= DateUtil.localTimeToUdate(of, localDateTime.toLocalDate());
         return blogMapper.selectByCreateTime(min,max,"sunjiaqing");
     }
 }

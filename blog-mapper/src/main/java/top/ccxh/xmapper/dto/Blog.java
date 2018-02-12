@@ -23,6 +23,7 @@ public class Blog implements Serializable {
     private Date createTime;
     private String url;
     private String githubName;
+    private Date githubTime;
 
     @Override
     public String toString() {
@@ -34,7 +35,16 @@ public class Blog implements Serializable {
                 ", createTime=" + createTime +
                 ", url='" + url + '\'' +
                 ", githubName='" + githubName + '\'' +
+                ", githubTime=" + githubTime +
                 '}';
+    }
+
+    public Date getGithubTime() {
+        return githubTime;
+    }
+
+    public void setGithubTime(Date githubTime) {
+        this.githubTime = githubTime;
     }
 
     public Integer getId() {

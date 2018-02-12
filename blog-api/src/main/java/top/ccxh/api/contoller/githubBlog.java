@@ -15,6 +15,6 @@ public class githubBlog {
     @RequestMapping("ccxh")
     public SysResult getBlogItem(){
 
-        return SysResult.oK(githubBlogService.getBlogs());
+         return SysResult.oK(githubBlogService.getBlogs());
     }
 }

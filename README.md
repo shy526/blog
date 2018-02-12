@@ -21,3 +21,16 @@ server {
 }
 ```
 
+## blog-api
+- 2018年2月12日
+    - 修复跨天读不到数据
+
+## blog-html
+- 2018年2月12日
+    - 修复博客页面展示时白底不正常的错误
+    - 增加githubTime的展示
+    
+## blog-scheduler
+- 2018年2月12日
+    - 添加一个githubTime的爬取
+
