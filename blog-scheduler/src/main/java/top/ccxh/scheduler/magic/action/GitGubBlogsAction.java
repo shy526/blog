@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import top.ccxh.common.service.HttpClientService;
 import top.ccxh.common.utils.DateUtil;
 import top.ccxh.scheduler.magic.GitHubBlogMagic;
 import top.ccxh.scheduler.magic.MagicUrl;
