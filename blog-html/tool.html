@@ -34,7 +34,7 @@
                     <div class="col-md-1"></div>
                     <div class="col-md-4">
                         <p>
-                            <button type="button" class=" btn btn-primary btn-lg">待收集</button>
+                            <a type="button" class=" btn btn-primary btn-lg">httpcode</a>
                         </p>
                         <p>
                             <button type="button" class=" btn btn-primary btn-lg">待收集</button>
@@ -154,6 +154,20 @@
                     </div>
 
                 </div>
+
+                <div class="httpcode" style="display: none">
+                    <div class="httpcode-menu" style="text-align: center">
+                        <a class="btn btn-default btn-lg  exit">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit &nbsp;&nbsp;&nbsp;&nbsp;</a>
+                        <a class="btn btn-default btn-lg  export">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;导出 &nbsp;&nbsp;&nbsp;&nbsp;</a>
+
+                        <p></p>
+                    </div>
+
+                    <div class="httpcode-body">
+
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
@@ -162,6 +176,9 @@
 <script src="assets/js/bootstrap.min.js"></script>
 <script src="js/tool/java2bean.js"></script>
 <script src="js/utils.js"></script>
+<script src="js/excel/excel-gen.js"></script>
+<script src="js/excel/jszip.js"></script>
+<script src="js/excel/FileSaver.js"></script>
 <script>
     $(function () {
         $(".all").load('navigation_menu.html');
@@ -177,7 +194,7 @@
         /**
          * java2bean 退出
          */
-        $(".sql2beanmenu .exit").click(function () {
+        $(".exit").click(function () {
             var className = $(this).attr("data-name");
             $(className).fadeOut(800);
             setTimeout(function () {
@@ -241,7 +258,17 @@
                 }
             })
         });
+        
+        $(".export ").click(function () {
+            excel =new ExcelGen({
+                "src_id": "httpCode",
+                "show_header": true
+            });
+            excel.generate();
+        })
     })
+
+    $(".httpcode-body").load('document/HTTPStatusCode.html');
 
 </script>
 </body>

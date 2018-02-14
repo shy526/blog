@@ -34,6 +34,7 @@ server {
     - 增加githubTime的展示
  - 2018年2月14日
     - 工具页面更新一个create2javaBean的功能
+    - 工具页面添加一个http状态码并前端支持导出功能
     
 ## blog-scheduler
 - 2018年2月12日

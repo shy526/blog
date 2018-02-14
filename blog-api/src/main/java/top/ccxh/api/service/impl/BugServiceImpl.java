@@ -16,6 +16,6 @@ public class BugServiceImpl implements BugService {
     @Override
     public int saveBug(Bug bug) {
         bug.setCreateTime(new Date());
-        return bugMapper.insert(bug);
+        return bugMapper.insertSelective(bug);
     }
 }
