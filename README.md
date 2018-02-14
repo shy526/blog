@@ -38,4 +38,6 @@ server {
 ## blog-scheduler
 - 2018年2月12日
     - 添加一个githubTime的爬取
+- 2018年2月14日
+    - 优化爬虫的爬取逻辑
 
