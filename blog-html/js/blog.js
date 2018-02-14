@@ -2,7 +2,6 @@
  * 博客属性数组
  */
 var blogs;
-
 /**
  * blogItem 渲染
  * @param blog 博客属性
@@ -36,7 +35,7 @@ function blogApply(blog,tagList,typeList) {
     html+="<h2 class='sub_title'>"+tagHtml+"</h2>\n" +
         "    <div class='post-meta'>\n" +
         "        <span class='timestamp'>来源:"+blog.githubName+"</span>\n" +
-        "        <span class='timestamp'>来源:"+formatDate(new Date(blog.githubTime),"yyyy-MM-dd HH:mm:ss")+"</span>\n" +
+        "        <span class='timestamp'>时间:"+formatDate(new Date(blog.githubTime),"yyyy-MM-dd HH:mm:ss")+"</span>\n" +
         "    </div>\n" +
         "    </div>\n" +
         "    </div>\n" +

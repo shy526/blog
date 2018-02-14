@@ -24,11 +24,16 @@ server {
 ## blog-api
 - 2018年2月12日
     - 修复跨天读不到数据
+- 2018年2月14日
+    - 更新一个提交bug的接口
+        - t_bug表中的REMARK字段需要设置为utf-8
 
 ## blog-html
 - 2018年2月12日
     - 修复博客页面展示时白底不正常的错误
     - 增加githubTime的展示
+ - 2018年2月14日
+    - 工具页面更新一个create2javaBean的功能
     
 ## blog-scheduler
 - 2018年2月12日

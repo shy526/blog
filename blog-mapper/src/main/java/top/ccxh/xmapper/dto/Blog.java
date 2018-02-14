@@ -25,7 +25,7 @@ public class Blog implements Serializable {
     private String githubName;
     private Date githubTime;
 
-    @Override
+ /*   @Override
     public String toString() {
         return "Blog{" +
                 "id=" + id +
@@ -37,8 +37,8 @@ public class Blog implements Serializable {
                 ", githubName='" + githubName + '\'' +
                 ", githubTime=" + githubTime +
                 '}';
-    }
-
+    }*/
+ 
     public Date getGithubTime() {
         return githubTime;
     }

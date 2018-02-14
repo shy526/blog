@@ -9,7 +9,7 @@ import top.ccxh.common.vo.SysResult;
 
 @RestController
 @RequestMapping("github/blog")
-public class githubBlog {
+public class GithubBlog {
     @Autowired
     private GithubBlogService githubBlogService;
     @RequestMapping("ccxh")

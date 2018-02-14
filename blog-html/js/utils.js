@@ -4,8 +4,7 @@
  * @param fmt 目标字符串格式，支持的字符有：y,M,d,q,w,H,h,m,S，默认：yyyy-MM-dd HH:mm:ss
  * @returns 返回格式化后的日期字符串
  */
-function formatDate(date, fmt)
-{
+function formatDate(date, fmt) {
     date = date == undefined ? new Date() : date;
     date = typeof date == 'number' ? new Date(date) : date;
     fmt = fmt || 'yyyy-MM-dd HH:mm:ss';
@@ -34,4 +33,36 @@ function formatDate(date, fmt)
         });
     }
     return fmt;
+}
+
+function popover() {
+    var snadeId=Math.random();
+    var shade="<div class=\"sweet-overlay\" tabindex=\"-1\" id=\"seww"+snadeId+"\" " +
+        "style=\"opacity: 2.19; display: block; background-color: rgba(0,0,0,.4);    background-color: rgba(0,0,0,.4);\n" +
+        "    position: fixed;\n" +
+        "    left: 0;\n" +
+        "    right: 0;\n" +
+        "    top: 0;\n" +
+        "    bottom: 0;\"></div>"
+    var html="<div class=\"modal fade bs-example-modal-lg in\"  tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\" aria-hidden=\"false\" style=\"display: block;\">\n" +
+    "    <div class=\"modal-dialog add-modal add-modallengg\">\n" +
+    "        <div class=\"modal-content\" style=\"margin-top: 0px;\">\n" +
+    "            <div class=\"modal-header modal-headernimadan\">\n" +
+    "                <button type=\"button\" class=\"close\" data-dismiss=\"modal\">\n" +
+    "                    <i class=\"icon-close\"></i>\n" +
+    "                </button>\n" +
+    "                <h4 class=\"modal-title\">提交bug <span style=\"float: right;cursor: pointer;padding-right: 10px\" class=\"XdisplayNone\">X</span></h4>\n" +
+    "            </div>\n" +
+    "            <div class=\"delivery-popup modal-body\">\n" +
+    "            <div>\n" +
+    "                \n" +
+    "            </div>\n" +
+    "\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n";
+    $("html").append($(shade));
+    console.log("gg ")
+
 }

@@ -40,7 +40,7 @@ public class GitHubBlogMagic implements PageProcessor {
             //获取github中的table
             Selectable table = page.getHtml().$(".file-wrap .files.js-navigation-container.js-active-navigation-container");
             //删除末尾为四十长度的切不包含%的连接
-            Selectable link = table.$("td a").links();
+            Selectable link = table.$("content a").links();
             if (!link.match()) {
                 return;
             }
@@ -81,5 +81,6 @@ public class GitHubBlogMagic implements PageProcessor {
         Spider spider = Spider.create(new GitHubBlogMagic());
         System.out.println("spider = " + "ddefe67bfb394bfa3e1b5e8e80875bf589330e7c".length());
         spider.addUrl("https://github.com/sunjiaqing/note").addPipeline(new ConsolePipeline()).thread(1).run();
+       ///sunjiaqing/note/contributors/master/Dubbo.md  //获取某个支上的提交信息
     }
 }

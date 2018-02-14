@@ -30,64 +30,219 @@
                     <div class="marker">ccxh</div>
                     <P class="info"></P>
                 </div>
-                <div class="col-md-1"></div>
-                <div class="col-md-4">
-                    <p>
-                        <button type="button" class=" btn btn-primary btn-lg">待收集</button>
-                    </p>
-                    <p>
-                        <button type="button" class=" btn btn-primary btn-lg">待收集</button>
-                    </p>
-                    <p>
-                        <button type="button" class=" btn btn-primary btn-lg">待收集</button>
-                    </p>
-                    <p>
-                        <button type="button" class=" btn btn-primary btn-lg">待收集</button>
-                    </p>
-                    <p>
-                        <button type="button" class=" btn btn-primary btn-lg">待收集</button>
-                    </p>
-                    <p>
-                        <button type="button" class=" btn btn-primary btn-lg">待收集</button>
-                    </p>
-                    <p>
-                        <button type="button" class=" btn btn-primary btn-lg">待收集</button>
-                    </p>
+                <div class="menu">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4">
+                        <p>
+                            <button type="button" class=" btn btn-primary btn-lg">待收集</button>
+                        </p>
+                        <p>
+                            <button type="button" class=" btn btn-primary btn-lg">待收集</button>
+                        </p>
+                        <p>
+                            <button type="button" class=" btn btn-primary btn-lg">待收集</button>
+                        </p>
+                        <p>
+                            <button type="button" class=" btn btn-primary btn-lg">待收集</button>
+                        </p>
+                        <p>
+                            <button type="button" class=" btn btn-primary btn-lg">待收集</button>
+                        </p>
+                        <p>
+                            <button type="button" class=" btn btn-primary btn-lg">待收集</button>
+                        </p>
+                        <p>
+                            <button type="button" class=" btn btn-primary btn-lg">待收集</button>
+                        </p>
+                    </div>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4 ">
+                        <p>
+                            <a class="btn btn-success btn-lg">sql2bean</a>
+                        </p>
+                        <p>
+                            <a class="btn btn-success btn-lg">待开发</a>
+                        </p>
+                        <p>
+                            <a class="btn btn-success btn-lg">待开发</a>
+                        </p>
+                        <p>
+                            <a class="btn btn-success btn-lg">待开发</a>
+                        </p>
+                        <p>
+                            <a class="btn btn-success btn-lg">待开发</a>
+                        </p>
+                        <p>
+                            <a class="btn btn-success btn-lg">待开发</a>
+                        </p>
+                        <p>
+                            <a class="btn btn-success btn-lg">待开发</a>
+                        </p>
+                    </div>
+                    <div class="col-md-1"></div>
                 </div>
-                <div class="col-md-2"></div>
-                <div class="col-md-4 ">
-                    <p>
-                    <button type="button" class=" btn btn-success btn-lg">SQL-->Bean</button>
-                    </p>
-                    <p>
-                        <a class="btn btn-success btn-lg">待开发</a>
-                    </p>
-                    <p>
-                        <a class="btn btn-success btn-lg">待开发</a>
-                    </p>
-                    <p>
-                        <a class="btn btn-success btn-lg">待开发</a>
-                    </p>
-                    <p>
-                        <a class="btn btn-success btn-lg">待开发</a>
-                    </p>
-                    <p>
-                        <a class="btn btn-success btn-lg">待开发</a>
-                    </p>
-                    <p>
-                        <a class="btn btn-success btn-lg">待开发</a>
-                    </p>
+                <div class="sql2bean" style="display: none;">
+                    <div class="col-md-6">
+                        <div class="sql">
+                        <textarea style="border-width:4px; height: 333px;width: 550px">
+                            CREATE TABLE `t_blog` (
+                                  `ID` int(11) NOT NULL AUTO_INCREMENT,
+                                  `GITHUB_NAME` varchar(255) DEFAULT NULL COMMENT 'github名字',
+                                  `TYPE` varchar(255) DEFAULT NULL COMMENT '文章类型',
+                                  `TITLE` varchar(255) DEFAULT NULL COMMENT '文章标题',
+                                  `TAG` varchar(500) DEFAULT NULL COMMENT '文章标签',
+                                  `CREATE_TIME` datetime DEFAULT NULL COMMENT '条目创建时间',
+                                  `URL` varchar(500) DEFAULT NULL COMMENT '文章连接',
+                                  `GITHUB_TIME` datetime DEFAULT NULL COMMENT 'github创建时间',
+                                  PRIMARY KEY (`ID`)
+                                ) ENGINE=InnoDB AUTO_INCREMENT=3691 DEFAULT CHARSET=utf8;
+                        </textarea>
+                        </div>
+                        <div class="bean">
+                            <textarea style="border-width:4px; height: 333px;width: 550px"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="sql2beanmenu col-md-6" style="">
+
+                        <div>
+                            <label>JavaBean生存选项:</label><br>
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="get/set" checked> get/set
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="toString" checked> toString
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="comments" checked> 注释
+                            </label>
+                            <br><label>命名规则:</label><br>
+                            <label class="radio-inline">
+                                <input type="radio" name="namingRule" value="Pasika"> 帕斯卡
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="namingRule" value="camel" checked="checked"> 驼峰
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="namingRule" value="UP"> 大写
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="namingRule" value="low"> 小写
+                            </label>
+                            <br><label>className:</label><br>
+                            <input type="text" name="className" placeholder="默认:表名">
+                            <br><label>注解:</label><br>
+                            <label class="radio-inline">
+                                <input type="radio" name="annotation" value="jpa"> JPA
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="annotation" value="mapper"> 通用mapper
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="annotation" value="" checked> 无
+                            </label>
+                            <p></p>
+                        </div>
+                        <p>
+                            <a class="btn btn-default btn-lg sql2beana">sql2bean</a>
+                            <a class="btn btn-default btn-lg copyBean">copyBean</a>
+                        </p>
+                        <p>
+                            <a class="btn btn-default btn-lg mysql2bingbug">&nbsp;bug提交</a>
+                            <a class="btn btn-default btn-lg  exit">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit &nbsp;&nbsp;&nbsp;&nbsp;</a>
+                        </p>
+                    </div>
+
                 </div>
-                <div class="col-md-1"></div>
             </div>
         </div>
     </div>
 </div>
 <script src="assets/js/jquery-3.1.0.min.js"></script>
 <script src="assets/js/bootstrap.min.js"></script>
+<script src="js/tool/java2bean.js"></script>
+<script src="js/utils.js"></script>
 <script>
-    $(".all").load('navigation_menu.html');
+    $(function () {
+        $(".all").load('navigation_menu.html');
+        $(".menu p").click(function () {
+            var text = "." + $(this).text().trim();
+            $(".menu").fadeOut(800);
+            setTimeout(function () {
+                $(text).fadeIn()
+            }, 800);
+            //为exit 按钮添加工具类名
+            $(text).find(".exit").attr("data-name", text);
+        });
+        /**
+         * java2bean 退出
+         */
+        $(".sql2beanmenu .exit").click(function () {
+            var className = $(this).attr("data-name");
+            $(className).fadeOut(800);
+            setTimeout(function () {
+                $(".menu").fadeIn()
+            }, 800);
+        });
+        /**
+         * java2bean 转换
+         */
+        $(".sql2beana").click(function () {
+            var className = null;
+            var val = $("input[name='className']").val();
+            if (val) {
+                className = val;
+            }
+            var option = {
+                annotation: $("input:radio[name='annotation']:checked").val(),
+                classname: className,
+                nameRule: $("input:radio[name='namingRule']:checked").val(),
+                comments: $("input[name='comments']").get(0).checked,
+                getset: $("input[name='get/set']").get(0).checked,
+                toStrong: $("input[name='toString']").get(0).checked
+            };
+            var creatable = $(".sql textarea").val();
+            if (!creatable) {
+                alert("还没写入sql语句");
+            }
+            var javacode = mysql2JavaBean.dispose(creatable, option)
+            $(".bean textarea").text(javacode);
+        })
+        /**
+         * java2bean copy
+         */
+        $(".copyBean").click(function () {
+            var val = $(".bean textarea").val();
+            if (val) {
+                $(".bean textarea").select();
+                document.execCommand("Copy");
+                return;
+            }
+        });
+
+        $(".mysql2bingbug").click(function () {
+            var creatable = $(".sql textarea").val().trim();
+            if (!creatable) {
+                alert("请保留错误的sql语句");
+            }
+            $.ajax({
+                type: "post",
+                url: "api/bug",
+                data: {
+                    remark: creatable,
+                    type: 0,
+                },
+                success: function (result) {
+                    if (result.ok) {
+                        alert("提交成功")
+                    } else {
+                        alert("提交失败")
+                    }
+                }
+            })
+        });
+    })
+
 </script>
 </body>
-
 </html>
