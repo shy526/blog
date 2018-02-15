@@ -108,3 +108,9 @@ then
 else
     echo "建立失败"
 fi
+
+echo "--------------------------"
+echo "----------首次任务--------"
+echo "--------------------------"
+ps -ef | grep blog-scheduler-1.0-SNAPSHOT.jar
+ps -ef | grep blog-api.jar

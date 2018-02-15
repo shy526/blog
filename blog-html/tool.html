@@ -241,6 +241,7 @@
             var creatable = $(".sql textarea").val().trim();
             if (!creatable) {
                 alert("请保留错误的sql语句");
+                return;
             }
             $.ajax({
                 type: "post",
@@ -258,7 +259,9 @@
                 }
             })
         });
-        
+        /**
+         * http状态导出
+         */
         $(".export ").click(function () {
             excel =new ExcelGen({
                 "src_id": "httpCode",

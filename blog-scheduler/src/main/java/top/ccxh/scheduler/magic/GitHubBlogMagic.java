@@ -36,11 +36,10 @@ public class GitHubBlogMagic implements PageProcessor {
             e.printStackTrace();
         }
         if (urldecoder != null && !urldecoder.matches(".*\\.md$")) {
-            page.setSkip(true);
             //获取github中的table
             Selectable table = page.getHtml().$(".file-wrap .files.js-navigation-container.js-active-navigation-container");
             //删除末尾为四十长度的切不包含%的连接
-            Selectable link = table.$("content a").links();
+            Selectable link = table.$(".content a").links();
             if (!link.match()) {
                 return;
             }
