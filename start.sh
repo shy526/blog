@@ -101,7 +101,7 @@ fi
 echo "--------------------------"
 echo "-----建立新的训练中心-----"
 echo "--------------------------"
-cp /home/blog/blog/blog-html/* /home/project/blog-html/
+cp -r /home/blog/blog/blog-html/* /home/project/blog-html/
 if [ $? -eq 0 ]
 then
     echo "建立成功"
