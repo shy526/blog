@@ -50,3 +50,22 @@ BLOG_API_PID=`ps -ef | grep blog-api.jar  | grep -v "$0" | grep -v "grep" | awk 
 BLOG_SCHEDULER_PID=`ps -ef | grep blog-scheduler-1.0-SNAPSHOT.jar  | grep -v "$0" | grep -v "grep" | awk '{print $2}'`
 echo "blog-api.jar pid : "$BLOG_API_PID
 echo "blog-scheduler-1.0-SNAPSHOT.jar pid : "$BLOG_SCHEDULER_PID
+
+echo "--------------------------"
+echo "-----更新blog-html--------"
+echo "--------------------------"
+rm -rf /home/project/blog-html/*
+if [ $? -eq 0 ]
+then
+    echo "清除旧文件成功"
+else
+    echo "清除旧文件失败"
+fi
+
+mv /home/blog/blog/blog-html/* /home/project/blog-html/
+if [ $? -eq 0 ]
+then
+    echo "填入旧文件成功"
+else
+    echo "填入旧文件失败"
+fi
