@@ -24,7 +24,7 @@ public class ServiceTest {
     public void test(){
       /*  LocalDateTime parse = LocalDateTime.parse("2018-02-11T16:44:30Z", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssz"));
         System.out.println("parse = " + parse.toString());*/
-      CronSequenceGenerator c=new CronSequenceGenerator("0 55/55-56 * * * ?");
+      CronSequenceGenerator c=new CronSequenceGenerator("0,1,2 1-2/50 * * * ?");
 
         Date next = c.next(new Date());
         System.out.println("next = " + next);

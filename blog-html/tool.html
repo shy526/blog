@@ -179,6 +179,7 @@
 <script src="js/excel/excel-gen.js"></script>
 <script src="js/excel/jszip.min.js"></script>
 <script src="js/excel/FileSaver.js"></script>
+<script src="js/tool/corn2runtime.js"></script>
 <script>
     $(function () {
         $(".all").load('navigation_menu.html');
@@ -273,6 +274,7 @@
 
     $(".httpcode-body").load('document/HTTPStatusCode.html');
 
+    cron2Runtime.checkCron("0,1,2 1-2/50 * * * ?");
 </script>
 </body>
 </html>
