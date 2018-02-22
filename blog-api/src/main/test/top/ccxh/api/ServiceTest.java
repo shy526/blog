@@ -25,11 +25,11 @@ public class ServiceTest {
     public void test(){
       /*  LocalDateTime parse = LocalDateTime.parse("2018-02-11T16:44:30Z", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssz"));
         System.out.println("parse = " + parse.toString());*/
-      CronSequenceGenerator c=new CronSequenceGenerator("* 0 5 * 12 ?");
+      CronSequenceGenerator c=new CronSequenceGenerator("* 0 5 * 12 1");
 
         Date next = c.next(new Date());
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String format = sdf.format(next);
-        System.out.println("next = " + next);
+        System.out.println("next = " + format);
     }
 }

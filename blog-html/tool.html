@@ -274,7 +274,11 @@
 
     $(".httpcode-body").load('document/HTTPStatusCode.html');
 
-    cron2Runtime.checkCron("0,1,2 * 1 * * ?");
+    cron2Runtime.checkCron("0 1/2 * * * ? ");
+    var next = cron2Runtime.next(new Date());
+    var next2 = cron2Runtime.next(next);
+    console.log(next)
+    console.log(next2)
 </script>
 </body>
 </html>

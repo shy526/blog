@@ -7,9 +7,9 @@ var cron2Runtime = {
         seconds: new Array(),
         minutes: new Array(),
         hours: new Array(),
-        daysOfMonth:new Array(),
-        months:new Array(),
-        daysOfWeek:new Array()
+        daysOfMonth: new Array(),
+        months: new Array(),
+        daysOfWeek: new Array()
     }
     ,
     /**
@@ -75,31 +75,31 @@ var cron2Runtime = {
         if (item.indexOf("/") != -1) {
             var itmes = item.split("/");
             if (itmes.length == 2) {
-                 range = cron2Runtime.pareseMaxMin(itmes[0], min, max);
+                range = cron2Runtime.pareseMaxMin(itmes[0], min, max);
                 if (range) {
                     //不含有- 时
                     if (itmes[0].indexOf("-") == -1) {
                         range.max = max - 1;
                     }
                     //累加步长
-                    for (var i = range.min; i <= range.max; i +=parseInt(itmes[1]) ) {
+                    for (var i = range.min; i <= range.max; i += parseInt(itmes[1])) {
                         //计算出所有被允许的时间
                         array.push(i);
                     }
 
-                }else {
+                } else {
                     return false;
                 }
             }
-        }else {
-            range=cron2Runtime.pareseMaxMin(item, min, max);
-            for (var i = range.min; i <= range.max; i ++) {
+        } else {
+            range = cron2Runtime.pareseMaxMin(item, min, max);
+            for (var i = range.min; i <= range.max; i++) {
                 //计算出所有被允许的时间
                 array.push(i)
             }
 
         }
-        if (!range){
+        if (!range) {
             return false;
         }
 
@@ -115,8 +115,8 @@ var cron2Runtime = {
     pareseMaxMin: function (item, min, max) {
         var result = {min: -1, max: -2}
         if (item.indexOf("*") != -1) {
-            result.min =  parseInt(min)
-            result.max =  parseInt(max - 1);
+            result.min = parseInt(min)
+            result.max = parseInt(max - 1);
             return result;
         }
         if (item.indexOf("-") != -1) {
@@ -124,8 +124,8 @@ var cron2Runtime = {
             result.min = parseInt(itmes[0]);
             result.max = parseInt(itmes[1]);
         } else {
-            result.max = parseInt(item) ;
-            result.min = parseInt(item) ;
+            result.max = parseInt(item);
+            result.min = parseInt(item);
         }
         if (result.min > result.max) {
             return;
@@ -138,10 +138,98 @@ var cron2Runtime = {
         }
         return result;
     },
-    pareseDay:function (array, item, min, max) {
-        if (item.indexOf("?")!=-1) {
+    pareseDay: function (array, item, min, max) {
+        if (item.indexOf("?") != -1) {
             item = "*";
         }
-        cron2Runtime.pareseAllow(array,item,min,max);
+        cron2Runtime.pareseAllow(array, item, min, max);
+    },
+    next: function (date) {
+        date=new Date(date.getTime()+1000);
+        var allowItem = cron2Runtime.allowItem;
+        //获取日(1-31)
+        var day = date.getDate();
+        //获取月份(0-11,0代表1月，+1 匹配 cron
+        var month = date.getMonth() + 1;
+        //获取星期?(0-6,0代表星期天) +1 匹配cron
+        var week = date.getDay() + 1;
+        //nianfen
+        var year =date.getFullYear();
+        var yearMonthDay = cron2Runtime.findNextDay(day, month, year);
+        var temp = new Date(yearMonthDay.year + "/" + yearMonthDay.month + "/" + yearMonthDay.day);
+        if (temp.getTime()>date.getTime()){
+            temp.setSeconds(allowItem.seconds[0])
+            temp.setMinutes(allowItem.minutes[0])
+            temp.setHours(allowItem.hours[0])
+        }else {
+            //获取秒数(0-59)
+            var seconds = date.getSeconds();
+            var updateSeconds = cron2Runtime.findNext(allowItem.seconds, seconds);
+            //获取分钟数(0-59)
+            var minutes = date.getMinutes();
+            var updateMinutes = cron2Runtime.findNext(allowItem.minutes, minutes + updateSeconds.increment);
+            //获取小时数(0-23)
+            var hours = date.getHours();
+            var updateHours = cron2Runtime.findNext(allowItem.hours, hours + updateMinutes.increment);
+            temp.setSeconds(updateSeconds.value)
+            temp.setMinutes(updateMinutes.value)
+            temp.setHours(updateHours.value)
+        }
+        return temp;
+    },
+    findNext: function (array, value) {
+        //TODO:后期优化
+        var newValue = -1;
+        for (var i = 0; i < array.length; i++) {
+            //x选出大于等于当前值的数
+            if (array[i] >= value) {
+                newValue = array[i];
+                break;
+            }
+        }
+        if (newValue != -1) {
+            return {value: newValue, increment: 0};
+        } else {
+            //这一时间内没有符合标准的
+            return {value: array[0], increment: 1};
+        }
+    },
+    findNextDay: function (day, month, year) {
+        var updateMonth = cron2Runtime.findNext(cron2Runtime.allowItem.months, month);
+        year += updateMonth.increment;
+        if (updateMonth.value != month) {
+            var maxDay = cron2Runtime.getDaysInMonth(year, month);
+            for (var i = 0; i < cron2Runtime.allowItem.daysOfMonth.length; i++) {
+                if (cron2Runtime.allowItem.daysOfMonth[i] <= maxDay) {
+                    day = cron2Runtime.allowItem.daysOfMonth[i]
+                    break;
+                }
+
+            }
+        }
+        //说明是当前月
+        var updateDay = cron2Runtime.findNext(cron2Runtime.allowItem.daysOfMonth, day);
+        var maxDay = cron2Runtime.getDaysInMonth(year, month);
+        //超出最大天的情况或者出现增量的情况下冲重新寻找
+        if (updateDay.value > maxDay || updateDay.increment != 0) {
+            return cron2Runtime.findNextDay(updateDay.value, updateMonth.value + 1, year);
+        }
+        //获取推算日期的星期
+        var newWeek = cron2Runtime.getWeek(year, updateMonth.value, updateDay.value);
+        var updateWeek = cron2Runtime.findNext(cron2Runtime.allowItem.daysOfWeek, newWeek);
+        if (updateWeek.value != newWeek) {
+            //算出符合星期数的天数
+            var number = Math.abs(updateWeek.value - newWeek);
+            return cron2Runtime.findNextDay(updateDay.value + newWeek, updateMonth.value, year);
+        }
+        return {year: year, month: updateMonth.value, day: day}
+    },
+    getDaysInMonth: function (year, month) {
+        var temp = new Date(year, month,0);
+        return temp.getDate();
+    },
+    getWeek: function (year, month, day) {
+        var temp = new Date(year ,month , day);
+        return temp.getDay() + 1;
     }
 }
