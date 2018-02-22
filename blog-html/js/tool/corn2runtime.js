@@ -9,6 +9,7 @@ var cron2Runtime = {
         hours: new Array(),
         daysOfMonth:new Array(),
         months:new Array(),
+        daysOfWeek:new Array()
     }
     ,
     /**
@@ -33,6 +34,9 @@ var cron2Runtime = {
         cron2Runtime.pareseDay(cron2Runtime.allowItem.daysOfMonth, cronParams[3], 1, 32);
         // 月分
         cron2Runtime.pareseDay(cron2Runtime.allowItem.months, cronParams[4], 1, 13);
+        //星期
+        cron2Runtime.pareseDay(cron2Runtime.allowItem.daysOfWeek, cronParams[5], 1, 8);
+
         console.log(cron2Runtime.allowItem);
         cron2Runtime.option.cron = cron;
         cron2Runtime.option.fields = cronParams;

@@ -10,6 +10,7 @@ import org.springframework.scheduling.support.CronSequenceGenerator;
 import org.springframework.test.context.junit4.SpringRunner;
 import top.ccxh.xmapper.mapper.BlogMapper;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -24,9 +25,11 @@ public class ServiceTest {
     public void test(){
       /*  LocalDateTime parse = LocalDateTime.parse("2018-02-11T16:44:30Z", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssz"));
         System.out.println("parse = " + parse.toString());*/
-      CronSequenceGenerator c=new CronSequenceGenerator("0,1,2 1-2/50 * * * ?");
+      CronSequenceGenerator c=new CronSequenceGenerator("* 0 5 * 12 ?");
 
         Date next = c.next(new Date());
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String format = sdf.format(next);
         System.out.println("next = " + next);
     }
 }
