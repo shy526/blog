@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.format.datetime.DateFormatter;
+import org.springframework.scheduling.support.CronSequenceGenerator;
 import org.springframework.test.context.junit4.SpringRunner;
 import top.ccxh.xmapper.mapper.BlogMapper;
 
@@ -21,7 +22,11 @@ public class ServiceTest {
     private BlogMapper blogMapper;
     @Test
     public void test(){
-        LocalDateTime parse = LocalDateTime.parse("2018-02-11T16:44:30Z", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssz"));
-        System.out.println("parse = " + parse.toString());
+      /*  LocalDateTime parse = LocalDateTime.parse("2018-02-11T16:44:30Z", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssz"));
+        System.out.println("parse = " + parse.toString());*/
+      CronSequenceGenerator c=new CronSequenceGenerator("0 55/55-56 * * * ?");
+
+        Date next = c.next(new Date());
+        System.out.println("next = " + next);
     }
 }

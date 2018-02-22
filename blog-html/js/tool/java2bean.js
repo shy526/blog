@@ -1,6 +1,8 @@
 
 var mysql2JavaBean={
-    //mysql对照表
+    /**
+     * 部分 mysql 类型-java类型 对照
+     */
     mysqlType:{
         VARCHAR: "String",
         CHAR: "String",
@@ -10,6 +12,9 @@ var mysql2JavaBean={
         DATETIME: "Date",
         TIMESTAMP: "Date"
     },
+    /**
+     * mysql 部分关键词处理
+     */
     mysqlKeyWord:{
         DEFAULT: function(word,i){
             i++;
@@ -40,7 +45,12 @@ var mysql2JavaBean={
 
         }
     },
-    //替换全局`和回车符
+    /**
+     * 替换全局`和回车符
+     * @param createTable
+     * @param option
+     * @returns {XML|string}
+     */
     init:function(createTable,option){
         if(option){
             for(var key in option){
@@ -49,17 +59,26 @@ var mysql2JavaBean={
         }
         return createTable.replace(new RegExp("`",'g'),"").replace(/[\r\n]/g,"");
     },
-    //获取主键
+    /**
+     * 抽取主键ID
+     * @param createTable
+     * @returns {XML|string|void}
+     */
     getId:function(createTable) {
         var reg = /PRIMARY KEY \((\w+)\)/;
         var id = createTable.match(reg);
         if (id && id.length >= 2) {
-            return id[1];
+            return id[1].replace(/\_/g,"");
         } else {
             return;
         }
     },
-        //处理核心逻辑
+    /**
+     * 核心处理逻辑
+     * @param createTable
+     * @param option
+     * @returns {*|string}
+     */
     dispose:function(createTable,option){
         createTable=mysql2JavaBean.init(createTable,option);
         var tableName=mysql2JavaBean.getTableName(createTable);
@@ -86,7 +105,11 @@ var mysql2JavaBean={
         return mysql2JavaBean.assemblebean(attrs);
 
     },
-    //抽取表名
+    /**
+     * 抽取表名
+     * @param createTable
+     * @returns {*}
+     */
     getTableName:function(createTable){
         var reg=/CREATE TABLE (\w+) \(/i;
         var tableName=createTable.match(reg);
@@ -96,7 +119,11 @@ var mysql2JavaBean={
             return ;
         }
     },
-    //获得所有单词
+    /**
+     * sql 转换为单词
+     * @param createTable
+     * @returns {Array}
+     */
     getWordList:function(createTable){
         reg=/\(.*\)/
         var attr=createTable.match(reg)
@@ -109,7 +136,12 @@ var mysql2JavaBean={
             return ;
         }
     },
-    // 解析一个属性
+    /**
+     * 解析一个属性
+     * @param words
+     * @param i
+     * @returns {{index: *, typeName: *, attrName: *, comments: string}}
+     */
     attrParse:function (words,i) {
         //获取属性
         var attrName=words[i];
@@ -175,7 +207,12 @@ var mysql2JavaBean={
         tableName:null,
         id:null,
     },
-    //转换帕斯卡,驼峰转换类
+    /**
+     * 转换帕斯卡,驼峰转换类
+     * @param str
+     * @param t1
+     * @returns {string}
+     */
     nameRulef:function (str,t1) {
         var array = str.split("_");
         var stt=""
@@ -192,6 +229,11 @@ var mysql2JavaBean={
         }
         return stt;
     },
+    /**
+     * 组装一个java类
+     * @param attrs
+     * @returns {string}
+     */
     assemblebean:function (attrs) {
         var clssName= mysql2JavaBean.nameRulef(mysql2JavaBean.option.classname,true);
         //拼接java 头
@@ -241,6 +283,11 @@ var mysql2JavaBean={
         }
         return result+"}";
     },
+    /**
+     * 生成 get set方法
+     * @param attr
+     * @returns {string}
+     */
     crateGetSet:function (attr) {
         var t = attr.attrName.charAt(0).toUpperCase();
         var d = attr.attrName.substring(1,attr.attrName.length).toLowerCase();
@@ -254,6 +301,11 @@ var mysql2JavaBean={
             "    }\n "
         return  get+set;
     },
+    /**
+     * 生成java toString 方法
+     * @param attr
+     * @returns {string}
+     */
     javaToString:function (attr) {
         if(attr.typeName=="Integer") {
             return "                 \",  "+attr.attrName+"=\""+"+"+attr.attrName+"+"+"\n"
