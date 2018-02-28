@@ -10,6 +10,7 @@ import top.ccxh.common.service.HttpClientService;
 import top.ccxh.common.utils.DateUtil;
 import top.ccxh.scheduler.magic.GitHubBlogMagic;
 import top.ccxh.scheduler.magic.MagicUrl;
+import top.ccxh.scheduler.magic.config.MyDownloader;
 import top.ccxh.xmapper.mapper.BlogMapper;
 import top.ccxh.xmapper.mapper.GithubUserMapper;
 import top.ccxh.xmapper.dto.Blog;
@@ -41,6 +42,7 @@ public class GitGubBlogsAction {
         for (GithubUser user:githubUsers){
             spider.addUrl(String.format(MagicUrl.GITHUB_URL,user.getGithubName(),user.getGithubRepository()));
         }
+        spider.setDownloader(new MyDownloader());
         final long[] floor = {0};
         spider.addPipeline((resultItems,task)->{
             Blog blog=resultItems.get("blog");

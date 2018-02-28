@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import top.ccxh.common.utils.DateUtil;
+import top.ccxh.scheduler.magic.config.MyDownloader;
 import top.ccxh.xmapper.dto.Blog;
 import us.codecraft.webmagic.*;
 import us.codecraft.webmagic.pipeline.ConsolePipeline;
@@ -78,8 +79,8 @@ public class GitHubBlogMagic implements PageProcessor {
     }
    public static void main(String[] args) {
         Spider spider = Spider.create(new GitHubBlogMagic());
-        System.out.println("spider = " + "ddefe67bfb394bfa3e1b5e8e80875bf589330e7c".length());
+        spider.setDownloader(new MyDownloader());
         spider.addUrl("https://github.com/sunjiaqing/note").addPipeline(new ConsolePipeline()).thread(1).run();
-       ///sunjiaqing/note/contributors/master/Dubbo.md  //获取某个支上的提交信息
+
     }
 }
