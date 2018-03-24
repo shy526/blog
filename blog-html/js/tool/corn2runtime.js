@@ -17,7 +17,11 @@ var cron2Runtime = {
     analysis:function (cron, date) {
         cron2Runtime.checkCron(cron)
         var next = cron2Runtime.next(date);
-        allowItem= {seconds: new Array(), minutes: new Array(), hours: new Array(), daysOfMonth: new Array(), months: new Array(), daysOfWeek: new Array()};
+        cron2Runtime.allowItem= {seconds: new Array(), minutes: new Array(), hours: new Array(), daysOfMonth: new Array(), months: new Array(), daysOfWeek: new Array()};
+        cron2Runtime.option={
+            fields: null,
+            cron: null
+        };
         return next;
     },
     /**
