@@ -3,6 +3,9 @@ var cron2Runtime = {
         fields: null,
         cron: null
     },
+    /**
+     * 可执行的时间分析
+     */
     allowItem: {
         seconds: new Array(),
         minutes: new Array(),
@@ -10,8 +13,13 @@ var cron2Runtime = {
         daysOfMonth: new Array(),
         months: new Array(),
         daysOfWeek: new Array()
-    }
-    ,
+    },
+    analysis:function (cron, date) {
+        cron2Runtime.checkCron(cron)
+        var next = cron2Runtime.next(date);
+        allowItem= {seconds: new Array(), minutes: new Array(), hours: new Array(), daysOfMonth: new Array(), months: new Array(), daysOfWeek: new Array()};
+        return next;
+    },
     /**
      * 验证cron表达式是否真确
      * @param crontime
@@ -247,8 +255,7 @@ var cron2Runtime = {
         var temp = new Date(year ,month , day);
         return temp.getDay() + 1;
     },
-    dateFtt:function (fmt,date)
-    { //author: meizz
+    dateFtt:function (fmt,date) { //author: meizz
         var o = {
             "M+" : date.getMonth()+1,                 //月份
             "d+" : date.getDate(),                    //日

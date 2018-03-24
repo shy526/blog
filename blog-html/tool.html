@@ -81,6 +81,7 @@
                     </div>
                     <div class="col-md-1"></div>
                 </div>
+                <!--sql 转java bean 功能模块-->
                 <div class="sql2bean" style="display: none;">
                     <div class="col-md-6">
                         <div class="sql">
@@ -154,7 +155,7 @@
                     </div>
 
                 </div>
-
+                <!--http状态码 文档模块-->
                 <div class="httpcode" style="display: none">
                     <div class="httpcode-menu" style="text-align: center">
                         <a class="btn btn-default btn-lg  exit">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit &nbsp;&nbsp;&nbsp;&nbsp;</a>
@@ -166,6 +167,30 @@
                     <div class="httpcode-body">
 
                     </div>
+
+                </div>
+                <!--cron表达式 计算 运行时间 功能模块-->
+                <div class="cron2Runtime" style="display: none">
+                    <div class="col-md-6">
+                        <label>
+                            cron表达式:&nbsp;&nbsp;<input type="text" class="cron" value="0 0 0 * * ?">
+
+                        </label>
+                        <label>
+                            最近:&nbsp;&nbsp;<input type="number" value="10" class="cron-num">&nbsp;&nbsp;次
+                        </label>
+                        <div class="cron-run-time" style="margin-top: 20px;">
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <a class="btn btn-default btn-lg  analysis">解析最近运行时间</a>
+                        <a class="btn btn-default btn-lg  exit">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit &nbsp;&nbsp;&nbsp;&nbsp;</a>
+                        <p></p>
+                        <a class="btn btn-default btn-lg cronbug">&nbsp;bug提交</a>
+
+                    </div>
+
 
                 </div>
             </div>
@@ -260,6 +285,33 @@
                 }
             })
         });
+
+        /**
+         * cron bug 提交
+         */
+        $(".cronbug").click(function () {
+            var creatable = $(".cron").val().trim();
+            if (!creatable) {
+                alert("请保留错误的cron 表达式");
+                return;
+            }
+            $.ajax({
+                type: "post",
+                url: "api/bug",
+                data: {
+                    remark: creatable,
+                    type:3,
+                },
+                success: function (result) {
+                    if (result.ok) {
+                        alert("提交成功")
+                    } else {
+                        alert("提交失败")
+                    }
+                }
+            })
+        })
+
         /**
          * http状态导出
          */
@@ -270,15 +322,38 @@
             });
             excel.generate();
         })
+
+        /**
+         * cron表达式解析
+         */
+        $(".analysis").click(function () {
+            var cron = $(".cron").val();
+            var num = $(".cron-num").val();
+            if (!num){
+                alert("你还没输入想获得最近几次的运行时间")
+                return;
+            }
+
+            if (cron){
+                //cron2Runtime.checkCron(cron.trim())
+                $(".cron-run-time").empty()
+                var date=new  Date()
+                for(var i=0;i<num;i++){
+                    var date = cron2Runtime.analysis(cron,date);
+                    var html="<p>第<span style='color: #ef5b5b'>"+(i+1)+"</span>次,运行时间为:  "+formatDate(date)+"</p>"
+                    $(".cron-run-time").append(html)
+                    console.log(formatDate(date));
+                }
+            }else {
+                alert("你没有输入cron表达式")
+            }
+
+        })
     })
 
     $(".httpcode-body").load('document/HTTPStatusCode.html');
 
-    cron2Runtime.checkCron("0 1/2 * * * ? ");
-    var next = cron2Runtime.next(new Date());
-    var next2 = cron2Runtime.next(next);
-    console.log(next)
-    console.log(next2)
+
 </script>
 </body>
 </html>
