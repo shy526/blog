@@ -17,13 +17,13 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * 爬取日志
+ * github爬虫
+ * @author honey
  */
-
 public class GitHubBlogMagic implements PageProcessor {
     private Logger log = LoggerFactory.getLogger(getClass());
     private Site site = Site.me().setRetryTimes(3).setSleepTime(100);
-    public static String GITHUB_URL = "https://github.com/";
+    private static String GITHUB_URL = "https://github.com/";
     private final static DateTimeFormatter GITHUB_DATE_TIME_FORMAT=DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssz");
 
     @Override

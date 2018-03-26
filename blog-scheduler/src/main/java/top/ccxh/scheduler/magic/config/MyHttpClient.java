@@ -13,6 +13,10 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
+/**
+ * 提供一个拥有证书的 httpclient
+ * @author honey
+ */
 public enum MyHttpClient {
     client;
     private CloseableHttpClient httpClient;

@@ -24,6 +24,7 @@ import java.util.List;
 
 /**
  * 抓取github的定时任务
+ * @author honey
  */
 @SuppressWarnings("SpringJavaAutowiringInspection")
 @Component
@@ -57,6 +58,5 @@ public class GitGubBlogsAction {
         Date date = DateUtil.localDateTimeToUdate(time);
         int i = blogMapper.deleteByCrateTime(date);
         log.info("GitGubBlogsAction,name:{},dispose:{},deleteItem:{},RunTime:{}", spider.getClass().getName(), spider.getPageCount(),i,end-start);
-
     }
 }

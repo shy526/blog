@@ -17,6 +17,7 @@ import java.io.IOException;
 
 /**
  * webmagic 渲染模块
+ * @author honey
  */
 public class MyDownloader extends HttpClientDownloader {
     private Logger loggerr=LoggerFactory.getLogger(this.getClass());
