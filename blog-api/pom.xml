@@ -28,7 +28,10 @@
             <artifactId>spring-boot-starter-tomcat</artifactId>
         </dependency>
         <!--添加依赖-->
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
         <dependency>
             <groupId>top.ccxh</groupId>
             <artifactId>blog-mapper</artifactId>
