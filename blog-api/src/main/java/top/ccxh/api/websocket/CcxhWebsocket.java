@@ -70,6 +70,11 @@ public class CcxhWebsocket {
         BaseChatRoom baseChatRoom = chartoom.get(queryString);
         if (baseChatRoom!=null){
             baseChatRoom.removeUser(session);
+            if(baseChatRoom.getCount()<=0){
+                chartoom.remove(queryString);
+                logger.info("id:{},退出房间", session.getId());
+                logger.info("删除聊天室:{}", baseChatRoom.getUrl());
+            }
         }else {
             try {
                 session.close();
@@ -77,8 +82,9 @@ public class CcxhWebsocket {
 
             }finally {
                 session=null;
+                logger.info("id:{},非法连接", session.getId());
             }
-            logger.info("id:{},退出房间", session.getId());
+
         }
 
     }

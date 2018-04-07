@@ -96,6 +96,9 @@ var mysql2JavaBean={
                 break;
             }
             var temp = mysql2JavaBean.attrParse(words,i);
+            if(temp.index==-1){
+                break;
+            }
             i=temp.index;
             attrs.push(temp)
         }
@@ -111,7 +114,7 @@ var mysql2JavaBean={
      * @returns {*}
      */
     getTableName:function(createTable){
-        var reg=/CREATE TABLE (\w+) \(/i;
+        var reg=/CREATE TABLE (\w+)\s*\(/i;
         var tableName=createTable.match(reg);
         if(tableName&&tableName.length>=2){
             return tableName[1];
@@ -146,9 +149,18 @@ var mysql2JavaBean={
         //获取属性
         var attrName=words[i];
         var typeName=words[++i];
-        var type = typeName.match(/(\w+)\(.+\)/);
+        if(!typeName){
+           return {
+               index: -1,
+           }
+        }
+        var type =null
+        type=typeName.match(/(\w+)\(.+\)/);
+
         if(type){
             typeName=type[1];
+        }else {
+            type=typeName;
         }
         //转化为javatype
         typeName= mysql2JavaBean.mysqlType[typeName.toUpperCase()];
@@ -251,7 +263,7 @@ var mysql2JavaBean={
                 javaAttr+="     /*"+attrs[i].comments+"*/\n"
             }
             if(mysql2JavaBean.option.annotation){
-                if(attrs[i].attrName.toUpperCase()==mysql2JavaBean.option.id.toUpperCase()){
+                if(mysql2JavaBean.option.id&&attrs[i].attrName.toUpperCase()==mysql2JavaBean.option.id.toUpperCase()){
                     javaAttr+="    @Id\n" +
                         "    @GeneratedValue(strategy = GenerationType.IDENTITY)\n"
                 }

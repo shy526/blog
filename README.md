@@ -40,6 +40,8 @@ server {
         - t_bug表中的REMARK字段需要设置为utf-8
 - 2018年4月6日 
     - 添加websocket支持
+- 2018年4月7日
+    - 聊天室的清楚工作
 
 ## blog-html
 
@@ -63,6 +65,10 @@ server {
     - cron 表达式解析功能 正式启用
         - 已知bug 解析中cron 解析可运行的值的数组 没有去重
     -  remark: 怎么久没更新,实在是被工作拖的,生活节奏有点乱
+- 2018年4月7日
+    - sql2bean的一些bug处理
+    - 添加了项目页(未完善)
+      
         
 ## blog-scheduler
 
