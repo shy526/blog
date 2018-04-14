@@ -10,7 +10,7 @@ public class ResultMessage implements Serializable ,WebSocketMessage {
     /**
      * 消息json
      */
-    private String date;
+    private String data;
     /**
      * 消息源
      */
@@ -20,6 +20,7 @@ public class ResultMessage implements Serializable ,WebSocketMessage {
      * 目标
      */
     private String target;
+
     public Integer getType() {
         return type;
     }
@@ -28,13 +29,14 @@ public class ResultMessage implements Serializable ,WebSocketMessage {
         this.type = type;
     }
 
-    public String getDate() {
-        return date;
+    public String getData() {
+        return data;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setData(String data) {
+        this.data = data;
     }
+
     public String getSource() {
         return source;
     }
@@ -55,7 +57,7 @@ public class ResultMessage implements Serializable ,WebSocketMessage {
     public String toString() {
         return "ResultMessage{" +
                 "type=" + type +
-                ", date='" + date + '\'' +
+                ", data='" + data + '\'' +
                 ", source='" + source + '\'' +
                 ", target='" + target + '\'' +
                 '}';

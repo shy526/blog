@@ -28,7 +28,6 @@ public class CcxhWebsocket {
     private final static ConcurrentHashMap<String,BaseChatRoom> chartoom=new ConcurrentHashMap<>();
     @OnOpen
     public void onOpen( Session session){
-
         String queryString=geturl(session);
         BaseChatRoom baseChatRoom = chartoom.get(queryString);
         if (baseChatRoom == null) {
@@ -36,32 +35,39 @@ public class CcxhWebsocket {
             chartoom.put(queryString,baseChatRoom);
         }
         baseChatRoom.addUser(session.getId(),session);
-        logger.info("聊天室URL:{},加入一位成员:{},共有:{}",queryString,session.getId(),baseChatRoom.getCount());
+
         ResultMessage resultMessage=new ResultMessage();
         resultMessage.setSource("System");
         resultMessage.setType(MessageType.login.getType());
-        resultMessage.setDate(session.getId());
+        resultMessage.setData(session.getId());
+        //返回用户名
         baseChatRoom.sedmessage(session,resultMessage);
+        logger.info("聊天室URL:{},加入一位成员:{},共有:{}",queryString,session.getId(),baseChatRoom.getCount());
     }
 
     @OnMessage
     public void onMessage(String message,Session session) throws IOException {
         ResultMessage resultMessage = JSON.parseObject(message, ResultMessage.class);
+        logger.info("消息:{}",resultMessage);
         if (resultMessage.getType()==MessageType.message.getType()){
-            if (resultMessage.getTarget().lastIndexOf("?")!=-1){
-                resultMessage.setTarget(resultMessage.getTarget().substring(0,resultMessage.getTarget().lastIndexOf("?")));
-            }
             BaseChatRoom baseChatRoom = chartoom.get(resultMessage.getTarget());
             if (baseChatRoom == null) {
                 logger.info("非法连接");
                 session.close();
             }else {
-                //修改为广播
                 resultMessage.setType(MessageType.broadcast.getType());
-                logger.info("广播消息:{}",resultMessage);
                 baseChatRoom.broadcast(resultMessage);
             }
-
+        }else if (resultMessage.getType()==MessageType.login.getType()){
+            BaseChatRoom baseChatRoom = chartoom.get(resultMessage.getTarget());
+            if (baseChatRoom != null) {
+                resultMessage.setType(MessageType.broadcast.getType());
+                resultMessage.setData("欢迎".concat(resultMessage.getData()).concat("加入"));
+                baseChatRoom.broadcast(resultMessage);
+            }else{
+                logger.info("非法连接");
+                session.close();
+            }
         }
     }
     @OnClose
@@ -91,9 +97,22 @@ public class CcxhWebsocket {
 
     @OnError
     public void onError(Session session, Throwable error) {
+        String queryString=geturl(session);
+        BaseChatRoom baseChatRoom = chartoom.get(queryString);
         error.printStackTrace();
+        logger.error("error:{}",session.getId());
+        if (baseChatRoom!=null){
+            baseChatRoom.removeUser(session);
+            if(baseChatRoom.getCount()<=0){
+                chartoom.remove(queryString);
+                logger.info("发生错误,删除里聊天室:{}", baseChatRoom.getUrl());
+            }else{
+                logger.info("发生错误,聊天室剩余:{}", baseChatRoom.getCount());
+            }
+        }else {
+            logger.info("发生错误,聊天室已经关闭:{}", baseChatRoom.getCount());
+        }
     }
-
     private String geturl(Session session){
         String queryString = session.getQueryString();
         //去掉参数

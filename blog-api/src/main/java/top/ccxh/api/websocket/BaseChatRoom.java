@@ -1,6 +1,7 @@
 package top.ccxh.api.websocket;
 
 import com.alibaba.fastjson.JSON;
+import org.springframework.util.StringUtils;
 
 import javax.websocket.Session;
 import java.io.IOException;
@@ -73,5 +74,17 @@ public  class BaseChatRoom {
      */
     public String getUrl(){
         return this.url;
+    }
+
+    /**
+     * 更新用户名
+     * @param newName
+     * @param session
+     */
+    public void updateUserNmae(String newName,Session session){
+        if(StringUtils.isEmpty(newName)){
+            return;
+        }
+        usernames.put(session,newName);
     }
 }
