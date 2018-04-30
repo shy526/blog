@@ -6,3 +6,6 @@ spring:
     default-domain: project4
   profiles:
     active: mvc,datasource,mybatis,httpclient
+logging:
+  level:
+    top.ccxh.xmapper.mapper: debug

@@ -41,7 +41,17 @@ server {
 - 2018年4月6日 
     - 添加websocket支持
 - 2018年4月7日
-    - 聊天室的清楚工作
+    - 聊天室清除工作
+- 2018年4月30日
+    - 更改博客展示的方式
+        - 从跳转github更改的本站访问
+        - 通过github-Mardown-css/auto-menu,重写调整展示方式
+        - 部分实现细节
+            1. 数据库展示基本信息
+            2. 目录页跳转展示页携带ID
+            3. 获取Id,通过jsonp调用接口
+            4. 服务端获取url,请求目标页,jsoup解析出相关页面
+            5.  github-Mardown-css,aut-menu 渲染展示
 
 ## blog-html
 
