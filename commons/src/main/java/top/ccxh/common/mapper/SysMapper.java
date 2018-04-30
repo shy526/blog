@@ -12,7 +12,7 @@ public interface SysMapper<T> extends BaseMapper<T> {
 	
 	//测试通用mapper的使用原理  编辑测试方法
 	@SelectProvider(type = SysMapperProvider.class, method = "dynamicSQL")
-	public int findMapperCount();
+	 int findMapperCount();
 
 
 }

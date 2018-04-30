@@ -17,7 +17,6 @@
     </properties>
 
     <dependencies>
-
         <dependency>
             <groupId>top.ccxh</groupId>
             <artifactId>commons</artifactId>

@@ -6,6 +6,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
 
+@Table(name="t_project")
 public class ProjectDto implements Serializable {
     private static final long serialVersionUID = 7L;
     /*不能为空,'id'*/

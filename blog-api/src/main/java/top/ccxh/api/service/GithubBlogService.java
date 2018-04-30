@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface GithubBlogService {
     List<Blog> getBlogs();
+
+    String getBlogBodyById(Integer id);
 }

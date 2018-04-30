@@ -30,11 +30,12 @@ var cron2Runtime = {
      */
     checkCron: function (cron) {
         if (!cron) {
-            return "时间表达式不能为空"
+            throw new Error("时间表达式不能为空")
         }
-        var cronParams = cron.split(" ");
+        cron=cron.trim();
+        var cronParams = cron.trim().split(" ");
         if (!cronParams instanceof Array || cronParams.length != 6) {
-            return "时间表达式格式不正确"
+            throw new Error("时间表达式有误")
         }
         //秒
         cron2Runtime.parese(cron2Runtime.allowItem.seconds, cronParams[0], 0, 60);

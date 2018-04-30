@@ -1,12 +1,17 @@
 package top.ccxh.api.service.impl;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.ccxh.api.service.GithubBlogService;
+import top.ccxh.common.service.HttpClientService;
 import top.ccxh.common.utils.DateUtil;
 import top.ccxh.xmapper.dto.Blog;
 import top.ccxh.xmapper.mapper.BlogMapper;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -15,9 +20,11 @@ import java.util.List;
 
 @Service
 public class GithubBlogServiceImpl implements GithubBlogService {
-    @SuppressWarnings("SpringJavaAutowiringInspection")
+    @SuppressWarnings({"SpringJavaAutowiringInspection", "SpringJavaInjectionPointsAutowiringInspection"})
     @Autowired
     private BlogMapper blogMapper;
+    @Autowired
+    HttpClientService httpClientService;
     @Override
     public List<Blog> getBlogs() {
         // 上一个小时的55
@@ -29,5 +36,23 @@ public class GithubBlogServiceImpl implements GithubBlogService {
         Date min= DateUtil.localTimeToUdate(of1,localDateTime.minusHours(1).toLocalDate());
         Date max= DateUtil.localTimeToUdate(of, localDateTime.toLocalDate());
         return blogMapper.selectByCreateTime(min,max,"sunjiaqing");
+    }
+
+    @Override
+    public String getBlogBodyById(Integer id) {
+        Blog blog = new Blog();
+        blog.setId(id);
+        Blog blog1 = blogMapper.selectByPrimaryKey(blog);
+        if (blog1!=null){
+            try {
+                String html = httpClientService.doGet(blog1.getUrl());
+                Document document = Jsoup.parse(html);
+                return document.body().select("article").toString();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+        return null;
     }
 }

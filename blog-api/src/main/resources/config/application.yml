@@ -5,4 +5,4 @@ spring:
   jmx:
     default-domain: project4
   profiles:
-    active: mvc,datasource,mybatis
+    active: mvc,datasource,mybatis,httpclient

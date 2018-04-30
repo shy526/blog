@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Title</title>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="plungin/github-markdown-css/github-markdown.css" />
+    <script src="js/load/load.js"></script>
+    <link rel="stylesheet" href="js/load/load4.css">
+    <link rel="stylesheet" href="js/load/main.css">
+    <script src="js/tool/java2bean.js"></script>
+</head>
+<body>
+
+</body>
+<script>
+/*    var option={
+        //Pasika,camel,up,low
+        nameRule: 'camel',
+    comments: true,
+    getset:true,
+    toStrong:true,
+    classname: null,
+    annotation:null,
+    tableName:null,
+    id:null,
+}*/
+var option={
+    //Pasika,camel,up,low
+    comments: true,
+    getset:true,
+    toStrong:true,
+    classname: null,
+    annotation:true,
+    tableName:null,
+    id:null,
+}
+
+var java2Bean2 = java2Bean("CREATE TABLE `t_water_index` (\n" +
+    "  `ID` int(11) NOT NULL AUTO_INCREMENT,\n" +
+    "  `ADDR` varchar(500) DEFAULT NULL COMMENT '检测地址',\n" +
+    "  `TESTING_TIME` datetime DEFAULT NULL COMMENT '检测时间',\n" +
+    "  `UPDATE_TIME` datetime DEFAULT NULL COMMENT '修改时间',\n" +
+    "  `CREATE_TIME` datetime DEFAULT NULL COMMENT '创建时间',\n" +
+    "  PRIMARY KEY (`ID`)\n" +
+    ") ENGINE=InnoDB DEFAULT CHARSET=latin1;",option);
+    console.log(java2Bean2);
+</script>
+</html>

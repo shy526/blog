@@ -31,7 +31,7 @@ public class SysResult implements Serializable{
 
     // 响应中的数据
     private Object data;
-
+    private String json;
     public static SysResult build(Integer status, String msg, Object data) {
         return new SysResult(status, msg, data);
     }
@@ -39,7 +39,6 @@ public class SysResult implements Serializable{
     public static SysResult oK(Object data) {
         return new SysResult(data);
     }
-
     /**
      * 设置状态为200
      * 成功
@@ -67,6 +66,11 @@ public class SysResult implements Serializable{
         this.status = 200;
         this.msg = "OK";
         this.data = data;
+    }
+    public SysResult(String json) {
+        this.status = 200;
+        this.msg = "OK";
+        this.json = json;
     }
 
     
@@ -165,4 +169,11 @@ public class SysResult implements Serializable{
         }
     }
 
+    public String getJson() {
+        return json;
+    }
+
+    public void setJson(String json) {
+        this.json = json;
+    }
 }
