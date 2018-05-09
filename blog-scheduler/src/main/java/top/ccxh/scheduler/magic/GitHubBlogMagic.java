@@ -1,6 +1,7 @@
 package top.ccxh.scheduler.magic;
 
 import com.alibaba.fastjson.JSON;
+import javafx.beans.binding.ObjectExpression;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import top.ccxh.common.utils.DateUtil;
@@ -13,8 +14,13 @@ import us.codecraft.webmagic.selector.Selectable;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * github爬虫
@@ -25,7 +31,7 @@ public class GitHubBlogMagic implements PageProcessor {
     private Site site = Site.me().setRetryTimes(3).setSleepTime(100);
     private static String GITHUB_URL = "https://github.com/";
     private final static DateTimeFormatter GITHUB_DATE_TIME_FORMAT=DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssz");
-
+    private SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
     @Override
     public void process(Page page) {
         Request request = page.getRequest();
@@ -47,6 +53,21 @@ public class GitHubBlogMagic implements PageProcessor {
             page.addTargetRequests(link.all());
 
         } else {
+            //处理时间,并发送到保存
+            if (request.getExtra("blog")!=null){
+                Blog blog = (Blog)request.getExtra("blog");
+                String timestr = page.getHtml().$("relative-time").xpath("//*/@datetime").get();
+                try {
+                    Date parse = simpleDateFormat.parse(timestr);
+                    blog.setGithubTime(parse);
+                    page.putField("blog", blog);
+                    return;
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                page.putField("blog", blog);
+                return;
+            }
             Selectable markdown = page.getHtml().$(".markdown-body.entry-content");
             if (markdown.match()) {
                 Selectable blogMessagePre = markdown.$("pre[lang='blog']");
@@ -57,15 +78,14 @@ public class GitHubBlogMagic implements PageProcessor {
                         blog.setUrl(url);
                         String substring = url.substring(GITHUB_URL.length());
                         blog.setGithubName(substring.split("/")[0]);
-
-                        //<relative-time datetime="2018-02-11T16:44:30Z" title="2018年2月12日 GMT+8 上午12:44">11 hours ago</relative-time>
                         Selectable datetime = page.getHtml().$("relative-time", "datetime");
                         if (datetime.match()){
                             blog.setGithubTime(DateUtil.localDateTimeToUdate(LocalDateTime.parse(datetime.get(),GITHUB_DATE_TIME_FORMAT)));
                         }
-
-                        page.putField("blog", blog);
-                        return;
+                        String timePath = page.getHtml().$(".commit-tease").xpath("//*/@src").get();
+                        String timeUrl = url.substring(0, request.getUrl().indexOf("com") + 3).concat(timePath);
+                        //重新发起请求获取githubTime
+                        page.addTargetRequest(getBlogTimeRequest(timeUrl,blog));
                     }
                 }
             }
@@ -77,10 +97,17 @@ public class GitHubBlogMagic implements PageProcessor {
     public Site getSite() {
         return site;
     }
+    private Request getBlogTimeRequest(String timeUrl,Object object){
+        Map<String,Object> map=new HashMap<>();
+        map.put("blog",object);
+        Request timeReq=new Request(timeUrl);
+        timeReq.setExtras(map);
+        return timeReq;
+    }
    public static void main(String[] args) {
         Spider spider = Spider.create(new GitHubBlogMagic());
         spider.setDownloader(new MyDownloader());
-        spider.addUrl("https://github.com/sunjiaqing/note").addPipeline(new ConsolePipeline()).thread(1).run();
+        spider.addUrl("https://github.com/sunjiaqing/note/blob/master/Docker.md").addPipeline(new ConsolePipeline()).thread(1).run();
 
     }
 }

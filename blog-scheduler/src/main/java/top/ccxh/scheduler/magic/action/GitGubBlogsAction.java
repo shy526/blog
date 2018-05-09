@@ -30,9 +30,11 @@ import java.util.List;
 @Component
 public class GitGubBlogsAction {
     private static final Logger log = LoggerFactory.getLogger(GitGubBlogsAction.class);
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     private GithubUserMapper githubUserMapper;
     @Autowired
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     private BlogMapper blogMapper;
     @Scheduled(cron = "0 55/55 * * * ?")
     public void reportCurrentTime() {

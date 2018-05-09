@@ -10,6 +10,6 @@
         SELECT * FROM t_blog
           WHERE  create_time <![CDATA[>=]]> #{min}
             AND  create_time <![CDATA[<]]> #{max}
-             AND github_name= #{name}
+             AND github_name= #{name} ORDER  BY github_time desc
     </select>
 </mapper>

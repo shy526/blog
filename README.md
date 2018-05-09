@@ -2,7 +2,6 @@
 [ccxh.top ](http://www.ccxh.top)
 
 ## nginx 测试配置
-
 ```
 server {
     listen		8021;
@@ -52,6 +51,9 @@ server {
             3. 获取Id,通过jsonp调用接口
             4. 服务端获取url,请求目标页,jsoup解析出相关页面
             5.  github-Mardown-css,aut-menu 渲染展示
+- 2018年5月9日
+    - 抽离websocket服务
+    - blog按时时间倒序排序
 
 ## blog-html
 
@@ -91,6 +93,8 @@ server {
 - 2018年2月28日
     - github添加证书后导致无法爬取的BUG(sll证书问题)
         - 自定义了Downloader组件
+- 2018年5月9日
+    - 针对github时间做出爬取
     
 
 
