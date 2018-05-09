@@ -21,6 +21,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * github爬虫
@@ -31,7 +32,7 @@ public class GitHubBlogMagic implements PageProcessor {
     private Site site = Site.me().setRetryTimes(3).setSleepTime(100);
     private static String GITHUB_URL = "https://github.com/";
     private final static DateTimeFormatter GITHUB_DATE_TIME_FORMAT=DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssz");
-    private SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+    private SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
     @Override
     public void process(Page page) {
         Request request = page.getRequest();
@@ -58,6 +59,7 @@ public class GitHubBlogMagic implements PageProcessor {
                 Blog blog = (Blog)request.getExtra("blog");
                 String timestr = page.getHtml().$("relative-time").xpath("//*/@datetime").get();
                 try {
+                    simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
                     Date parse = simpleDateFormat.parse(timestr);
                     blog.setGithubTime(parse);
                     page.putField("blog", blog);
