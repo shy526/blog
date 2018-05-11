@@ -14,7 +14,7 @@ function callBack(value) {
         load.deleteLoad();
         window.document.body.innerHTML+=value.data.content
         setTimeout(function () {
-            countCcxh(0,value.data.url);
+            countCcxh(1,value.data.url);
         },100);
         $(function () {
             $("body").append("<div class=\"autoMenu\" id=\"autoMenu\" data-autoMenu></div>");
