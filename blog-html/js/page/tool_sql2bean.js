@@ -58,4 +58,5 @@ $(function () {
 
 
     })
+    countCcxh(0)
 })

@@ -39,15 +39,15 @@ public class GithubBlogServiceImpl implements GithubBlogService {
     }
 
     @Override
-    public String getBlogBodyById(Integer id) {
+    public Blog getBlogBodyById(Integer id) {
         Blog blog = new Blog();
         blog.setId(id);
-        Blog blog1 = blogMapper.selectByPrimaryKey(blog);
-        if (blog1!=null){
+        blog=blogMapper.selectByPrimaryKey(blog);
+        if (blog!=null){
             try {
-                String html = httpClientService.doGet(blog1.getUrl());
+                String html = httpClientService.doGet(blog.getUrl());
                 Document document = Jsoup.parse(html);
-                return document.body().select("article").toString();
+                return blog.setContent(document.body().select("article").toString());
             } catch (Exception e) {
                 e.printStackTrace();
                 return null;

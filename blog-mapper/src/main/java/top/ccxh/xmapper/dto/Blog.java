@@ -1,9 +1,8 @@
 package top.ccxh.xmapper.dto;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.alibaba.fastjson.annotation.JSONField;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -24,7 +23,9 @@ public class Blog implements Serializable {
     private String url;
     private String githubName;
     private Date githubTime;
-
+    @JSONField(serialize=true)
+    @Transient
+    private String content;
  /*   @Override
     public String toString() {
         return "Blog{" +
@@ -101,5 +102,14 @@ public class Blog implements Serializable {
 
     public void setGithubName(String githubName) {
         this.githubName = githubName;
+    }
+
+    public Blog setContent(String article) {
+        this.content=article;
+        return this;
+    }
+
+    public String getContent() {
+        return content;
     }
 }

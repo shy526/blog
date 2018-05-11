@@ -38,6 +38,7 @@ $(function () {
             }
         }
     });
+    countCcxh(0)
 })
 function tagDispose(value){
     var tags = value.split(",");

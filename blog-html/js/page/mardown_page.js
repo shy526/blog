@@ -7,12 +7,15 @@ function getQueryString(name) {
 }
 var id = getQueryString("id");
 if(id){
-    mountScript("http://ccxh.top/api/github/blog/call/body?id="+id);
+    mountScript("/api/github/blog/call/body?id="+id);
 }
 function callBack(value) {
     if(value.ok){
         load.deleteLoad();
-        window.document.body.innerHTML+=value.json;
+        window.document.body.innerHTML+=value.data.content
+        setTimeout(function () {
+            countCcxh(0,value.data.url);
+        },100);
         $(function () {
             $("body").append("<div class=\"autoMenu\" id=\"autoMenu\" data-autoMenu></div>");
             $("#autoMenu").autoMenu({
@@ -39,3 +42,4 @@ function callBack(value) {
         },7000)
     }
 }
+
