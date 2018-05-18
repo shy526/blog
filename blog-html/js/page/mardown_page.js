@@ -16,6 +16,8 @@ function callBack(value) {
         setTimeout(function () {
             countCcxh(1,value.data.url);
         },100);
+        //设置一个
+        $('title').text(value.data.title);
         $(function () {
             $("body").append("<div class=\"autoMenu\" id=\"autoMenu\" data-autoMenu></div>");
             $("#autoMenu").autoMenu({

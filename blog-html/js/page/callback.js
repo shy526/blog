@@ -1,8 +1,6 @@
 /**
  * 删除自己的存在
  */
-
-
 function suicid() {
     setTimeout(function () {
         var scripts = document.getElementsByTagName('script');

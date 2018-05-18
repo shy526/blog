@@ -1,4 +1,8 @@
-
+/**
+ * 统计
+ * @param type 类型
+ * @param extend 扩展字段
+ */
 function countCcxh(type,extend) {
     $.ajax({
         type:"post",
@@ -7,5 +11,5 @@ function countCcxh(type,extend) {
             type:type,
             extend: extend
         }
-    })
+    });
 }
