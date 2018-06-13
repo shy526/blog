@@ -43,6 +43,7 @@ public class GitHubBlogMagic implements PageProcessor {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+        // 处理文件夹
         if (urldecoder != null && !urldecoder.matches(".*\\.md$")) {
             //获取github中的table
             Selectable table = page.getHtml().$(".file-wrap .files.js-navigation-container.js-active-navigation-container");
@@ -57,23 +58,14 @@ public class GitHubBlogMagic implements PageProcessor {
             //处理时间,并发送到保存
             if (request.getExtra("blog")!=null){
                 Blog blog = (Blog)request.getExtra("blog");
-                String timestr = page.getHtml().$("relative-time").xpath("//*/@datetime").get();
-                try {
-                    simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-                    Date parse = simpleDateFormat.parse(timestr);
-                    blog.setGithubTime(parse);
-                    page.putField("blog", blog);
-                    return;
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                page.putField("blog", blog);
+                finall( page, blog);
                 return;
             }
+            //找到md
             Selectable markdown = page.getHtml().$(".markdown-body.entry-content");
             if (markdown.match()) {
                 Selectable blogMessagePre = markdown.$("pre[lang='blog']");
-                if (null != blogMessagePre && !"".equals(blogMessagePre)) {
+                if (blogMessagePre.match()) {
                     String code = blogMessagePre.$("code").replace("\n", "").regex("\\{.*\\}").toString();
                     if (!"".equals(code) && null != code) {
                         Blog blog = JSON.parseObject(code, Blog.class);
@@ -85,6 +77,11 @@ public class GitHubBlogMagic implements PageProcessor {
                             blog.setGithubTime(DateUtil.localDateTimeToUdate(LocalDateTime.parse(datetime.get(),GITHUB_DATE_TIME_FORMAT)));
                         }
                         String timePath = page.getHtml().$(".commit-tease").xpath("//*/@src").get();
+                        if ("".equals(timePath)){
+                            //预防已加载
+                            finall( page, blog);
+                            return;
+                        }
                         String timeUrl = url.substring(0, request.getUrl().indexOf("com") + 3).concat(timePath);
                         //重新发起请求获取githubTime
                         page.addTargetRequest(getBlogTimeRequest(timeUrl,blog));
@@ -106,10 +103,23 @@ public class GitHubBlogMagic implements PageProcessor {
         timeReq.setExtras(map);
         return timeReq;
     }
+    private void finall(Page page,Blog blog){
+        String timestr = page.getHtml().$("relative-time").xpath("//*/@datetime").get();
+        try {
+            simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+            Date parse = simpleDateFormat.parse(timestr);
+            blog.setGithubTime(parse);
+            page.putField("blog", blog);
+            return;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        page.putField("blog", blog);
+    }
    public static void main(String[] args) {
         Spider spider = Spider.create(new GitHubBlogMagic());
         spider.setDownloader(new MyDownloader());
-        spider.addUrl("https://github.com/sunjiaqing/note/blob/master/Docker.md").addPipeline(new ConsolePipeline()).thread(1).run();
+        spider.addUrl("https://github.com/sunjiaqing/note").addPipeline(new ConsolePipeline()).thread(11).run();
 
     }
 }
